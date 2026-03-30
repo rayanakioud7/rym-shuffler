@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RYM Shuffler</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container {
+            background: #16213e;
+            padding: 2.5rem;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 650px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        h1 { margin-bottom: 0.3rem; color: #e94560; font-size: 2rem; }
+        p.sub { color: #aaa; margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .steps {
+            background: #0f3460;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+        .steps code {
+            background: #1a1a2e;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #e94560;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #0f3460;
+            background: #1a1a2e;
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        input[type="text"]:focus { outline: none; border-color: #e94560; }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #0f3460;
+            background: #1a1a2e;
+            color: #ccc;
+            font-family: monospace;
+            font-size: 0.8rem;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+        textarea:focus { outline: none; border-color: #e94560; }
+        button {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover { background: #c73652; }
+        .flash { color: #ff6b6b; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎲 RYM Shuffler</h1>
+        <p class="sub">Get a random album from your rated collection</p>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash">
+            {% for msg in messages %}<p>{{ msg }}</p>{% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="steps">
+            <strong>3 easy steps:</strong><br>
+            1️⃣ Go to <code>rateyourmusic.com/collection_p/YOUR_USERNAME/</code><br>
+            2️⃣ Press <code>Ctrl+A</code> then <code>Ctrl+C</code> to copy everything<br>
+            3️⃣ Paste it below and hit shuffle!
+        </div>
+
+        <form action="/parse" method="post">
+            <input type="text" name="username" placeholder="Your RYM username (optional)">
+            <textarea name="collection_text" placeholder="Paste your collection here..."></textarea>
+            <button type="submit">🎵 Shuffle!</button>
+        </form>
+    </div>
+</body>
+</html>

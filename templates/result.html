@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Random Album!</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: #16213e;
+            padding: 3rem;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 520px;
+            width: 90%;
+        }
+        h1 { color: #e94560; margin-bottom: 1.5rem; font-size: 1.5rem; }
+        .album-card {
+            background: #0f3460;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        .artist { font-size: 1rem; color: #aaa; margin-bottom: 0.3rem; }
+        .title { font-size: 1.8rem; font-weight: bold; color: #fff; margin-bottom: 0.8rem; }
+        .rating-num { color: #e94560; font-size: 1.3rem; }
+        .controls { margin-bottom: 1rem; }
+        .filter-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .filter-row label { font-size: 0.85rem; color: #aaa; }
+        .filter-row select {
+            background: #0f3460;
+            color: #fff;
+            border: 1px solid #1a4a8a;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+        button {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0.3rem;
+        }
+        button:hover { background: #c73652; }
+        .secondary { background: #0f3460; }
+        .secondary:hover { background: #1a4a8a; }
+        .search-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .search-links a { color: #4fc3f7; text-decoration: none; font-size: 0.85rem; }
+        .search-links a:hover { text-decoration: underline; }
+        .total { color: #555; font-size: 0.8rem; margin-top: 1.5rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎲 You should listen to...</h1>
+
+        <div class="album-card">
+            <div class="artist">{{ album.artist }}</div>
+            <div class="title">{{ album.title }}</div>
+            <div class="rating-num">★ {{ album.rating }} / 5.0</div>
+        </div>
+
+        <div class="controls">
+            <form action="/shuffle" method="post">
+                <div class="filter-row">
+                    <label>Min rating:</label>
+                    <select name="min_rating">
+                        <option value="">Any</option>
+                        <option value="3.0">3.0+</option>
+                        <option value="3.5">3.5+</option>
+                        <option value="4.0">4.0+</option>
+                        <option value="4.5">4.5+</option>
+                        <option value="5.0">5.0 only</option>
+                    </select>
+                </div>
+                <button type="submit">🎲 Shuffle Again</button>
+            </form>
+        </div>
+
+        <a href="/"><button class="secondary">↩ Start Over</button></a>
+
+        <div class="search-links">
+            <a href="https://www.youtube.com/results?search_query={{ album.artist }} {{ album.title }}"
+               target="_blank">▶ YouTube</a>
+            <a href="https://open.spotify.com/search/{{ album.artist }} {{ album.title }}"
+               target="_blank">🎧 Spotify</a>
+        </div>
+
+        <p class="total">Picked from {{ total }} rated albums{% if username %} by {{ username }}{% endif %}</p>
+    </div>
+</body>
+</html>
